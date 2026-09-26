@@ -1,491 +1,320 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Net Cafe Simulator</title>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <title>Thành Phố Sợi Chỉ</title>
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #10131a;
-    color: white;
-}
-
-.header {
-    background: #171b24;
-    padding: 18px;
-    text-align: center;
-    border-bottom: 2px solid #292f3d;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 25px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 15px;
-    max-width: 900px;
-    margin: auto;
-}
-
-.stat {
-    background: #1b202b;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.stat b {
-    display: block;
-    font-size: 22px;
-    margin-top: 5px;
-}
-
-.money {
-    color: #4ade80;
-}
-
-.main {
-    max-width: 900px;
-    margin: auto;
-    padding: 15px;
-}
-
-.panel {
-    background: #171b24;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-}
-
-.panel h2 {
-    margin-top: 0;
-}
-
-.computers {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.pc {
-    background: #202632;
-    border: 2px solid #303847;
-    border-radius: 14px;
-    padding: 15px;
-    text-align: center;
-}
-
-.pc .monitor {
-    font-size: 45px;
-}
-
-.pc h3 {
-    margin: 8px 0;
-}
-
-.status {
-    font-size: 14px;
-    margin: 8px 0;
-}
-
-.free {
-    color: #4ade80;
-}
-
-.busy {
-    color: #f87171;
-}
-
-button {
-    border: none;
-    border-radius: 10px;
-    padding: 11px 15px;
-    background: #5865f2;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 5px;
-}
-
-button:hover {
-    background: #4752c4;
-}
-
-button:disabled {
-    background: #444;
-    cursor: not-allowed;
-}
-
-.shop {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.log {
-    background: #0d1016;
-    border-radius: 10px;
-    padding: 12px;
-    height: 150px;
-    overflow-y: auto;
-    font-size: 14px;
-}
-
-.log p {
-    margin: 5px 0;
-}
-
-@media (max-width: 600px) {
-    .computers {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .stats {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .stat {
-        padding: 10px 5px;
-        font-size: 12px;
-    }
-
-    .stat b {
-        font-size: 17px;
-    }
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="header">
-    <h1>🎮 NET CAFE SIMULATOR</h1>
-    <p>Quản lý quán net của bạn</p>
-</div>
+    <main class="game-container">
 
-<div class="stats">
+        <!-- LOGIN CARD -->
+        <section class="login-card">
 
-    <div class="stat">
-        💰 Tiền
-        <b class="money" id="money">100000</b> ¥
-    </div>
-
-    <div class="stat">
-        ⭐ Danh tiếng
-        <b id="reputation">1</b>
-    </div>
-
-    <div class="stat">
-        👥 Khách
-        <b id="customers">0</b>
-    </div>
-
-</div>
-
-<div class="main">
-
-    <div class="panel">
-        <h2>🖥️ Máy tính</h2>
-
-        <div class="computers" id="computers"></div>
-    </div>
-
-    <div class="panel">
-
-        <h2>🛒 Cửa hàng</h2>
-
-        <div class="shop">
-
-            <button onclick="buyPC()">
-                🖥️ Mua máy - 50,000¥
-            </button>
-
-            <button onclick="upgradePC()">
-                ⚡ Nâng cấp máy - 30,000¥
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="panel">
-
-        <h2>📋 Nhật ký</h2>
-
-        <div class="log" id="log"></div>
-
-    </div>
-
-</div>
-
-<script>
-
-let money = 100000;
-
-let reputation = 1;
-
-let customers = 0;
-
-let computers = [
-    {
-        level: 1,
-        busy: false,
-        time: 0
-    },
-    {
-        level: 1,
-        busy: false,
-        time: 0
-    },
-    {
-        level: 1,
-        busy: false,
-        time: 0
-    }
-];
-
-function updateStats() {
-
-    document.getElementById("money").textContent =
-        money.toLocaleString();
-
-    document.getElementById("reputation").textContent =
-        reputation;
-
-    document.getElementById("customers").textContent =
-        customers;
-
-}
-
-function renderComputers() {
-
-    const container =
-        document.getElementById("computers");
-
-    container.innerHTML = "";
-
-    computers.forEach((pc, index) => {
-
-        const div = document.createElement("div");
-
-        div.className = "pc";
-
-        let status;
-
-        if (pc.busy) {
-
-            status = `
-                <div class="status busy">
-                    🔴 Đang có khách
-                </div>
-                <div>
-                    ⏱️ ${pc.time}s
-                </div>
-            `;
-
-        } else {
-
-            status = `
-                <div class="status free">
-                    🟢 Máy trống
-                </div>
-            `;
-
-        }
-
-        div.innerHTML = `
-
-            <div class="monitor">🖥️</div>
-
-            <h3>PC #${index + 1}</h3>
-
-            <div>
-                ⭐ Cấp ${pc.level}
+            <!-- LOGO -->
+            <div class="logo-area">
+                <img
+                    src="logo.png"
+                    alt="Thành Phố Sợi Chỉ"
+                    class="game-logo"
+                >
             </div>
 
-            ${status}
+            <div class="subtitle">
+                ✦ ONLINE WORLD ✦
+            </div>
 
-            <button
-                ${pc.busy ? "disabled" : ""}
-                onclick="startCustomer(${index})"
-            >
-                👤 Cho khách vào
-            </button>
+            <!-- TAB -->
+            <div class="tabs">
 
-        `;
+                <button
+                    type="button"
+                    id="loginTab"
+                    class="tab active"
+                >
+                    ĐĂNG NHẬP
+                </button>
 
-        container.appendChild(div);
+                <button
+                    type="button"
+                    id="registerTab"
+                    class="tab"
+                >
+                    ĐĂNG KÝ
+                </button>
 
-    });
+            </div>
 
-}
+            <!-- FORM -->
+            <form id="accountForm">
 
-function startCustomer(index) {
+                <!-- USERNAME -->
+                <label for="username">
+                    TÊN TÀI KHOẢN
+                </label>
 
-    const pc = computers[index];
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Nhập tên tài khoản..."
+                    maxlength="20"
+                    autocomplete="username"
+                    required
+                >
 
-    if (pc.busy) return;
+                <!-- PASSWORD -->
+                <label for="password">
+                    MẬT KHẨU
+                </label>
 
-    pc.busy = true;
+                <div class="password-box">
 
-    pc.time = 20;
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Nhập mật khẩu..."
+                        minlength="6"
+                        autocomplete="current-password"
+                        required
+                    >
 
-    customers++;
+                    <button
+                        type="button"
+                        id="showPassword"
+                        class="password-button"
+                    >
+                        👁
+                    </button>
 
-    addLog(
-        "👤 Một khách đã thuê PC #" +
-        (index + 1)
-    );
+                </div>
 
-    renderComputers();
+                <!-- CONFIRM PASSWORD -->
+                <div
+                    id="confirmPasswordBox"
+                    class="hidden"
+                >
 
-    updateStats();
+                    <label for="confirmPassword">
+                        NHẬP LẠI MẬT KHẨU
+                    </label>
 
-}
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Nhập lại mật khẩu..."
+                        minlength="6"
+                        autocomplete="new-password"
+                    >
 
-function gameTick() {
+                </div>
 
-    computers.forEach((pc, index) => {
+                <!-- REMEMBER -->
+                <label class="remember">
 
-        if (pc.busy) {
+                    <input
+                        type="checkbox"
+                        id="remember"
+                    >
 
-            pc.time--;
+                    <span>
+                        Ghi nhớ tài khoản trên thiết bị này
+                    </span>
 
-            if (pc.time <= 0) {
+                </label>
 
-                pc.busy = false;
+                <!-- SUBMIT -->
+                <button
+                    type="submit"
+                    id="submitButton"
+                    class="main-button"
+                >
+                    ▶ ĐĂNG NHẬP VÀO THÀNH PHỐ
+                </button>
 
-                const income =
-                    5000 * pc.level;
+            </form>
 
-                money += income;
+            <div class="footer">
+                THÀNH PHỐ SỢI CHỈ © 2026
+                <br>
+                PIXEL ONLINE ROLEPLAY
+            </div>
 
-                customers--;
+        </section>
 
-                reputation += 1;
+    </main>
 
-                addLog(
-                    "💰 PC #" +
-                    (index + 1) +
-                    " kiếm được " +
-                    income.toLocaleString() +
-                    "¥"
-                );
 
-                updateStats();
+    <script>
+
+        const loginTab =
+            document.getElementById("loginTab");
+
+        const registerTab =
+            document.getElementById("registerTab");
+
+        const confirmBox =
+            document.getElementById("confirmPasswordBox");
+
+        const confirmPassword =
+            document.getElementById("confirmPassword");
+
+        const submitButton =
+            document.getElementById("submitButton");
+
+        const password =
+            document.getElementById("password");
+
+        const showPassword =
+            document.getElementById("showPassword");
+
+        const form =
+            document.getElementById("accountForm");
+
+
+        let registerMode = false;
+
+
+        /*
+        ========================================
+        CHUYỂN ĐĂNG NHẬP / ĐĂNG KÝ
+        ========================================
+        */
+
+        function changeMode(register) {
+
+            registerMode = register;
+
+            loginTab.classList.toggle(
+                "active",
+                !register
+            );
+
+            registerTab.classList.toggle(
+                "active",
+                register
+            );
+
+
+            if (register) {
+
+                confirmBox.classList.remove("hidden");
+
+                confirmPassword.required = true;
+
+                submitButton.textContent =
+                    "▶ TẠO TÀI KHOẢN";
+
+            } else {
+
+                confirmBox.classList.add("hidden");
+
+                confirmPassword.required = false;
+
+                submitButton.textContent =
+                    "▶ ĐĂNG NHẬP VÀO THÀNH PHỐ";
 
             }
 
         }
 
-    });
 
-    renderComputers();
-
-}
-
-function buyPC() {
-
-    if (money < 50000) {
-
-        addLog("❌ Không đủ tiền để mua máy.");
-
-        return;
-    }
-
-    money -= 50000;
-
-    computers.push({
-        level: 1,
-        busy: false,
-        time: 0
-    });
-
-    addLog("🖥️ Đã mua thêm một máy tính.");
-
-    updateStats();
-
-    renderComputers();
-
-}
-
-function upgradePC() {
-
-    if (money < 30000) {
-
-        addLog("❌ Không đủ tiền nâng cấp.");
-
-        return;
-    }
-
-    let pc =
-        computers.find(pc => !pc.busy);
-
-    if (!pc) {
-
-        addLog(
-            "❌ Tất cả máy đang có khách."
+        loginTab.addEventListener(
+            "click",
+            () => changeMode(false)
         );
 
-        return;
-    }
 
-    money -= 30000;
+        registerTab.addEventListener(
+            "click",
+            () => changeMode(true)
+        );
 
-    pc.level++;
 
-    addLog(
-        "⚡ Đã nâng cấp PC lên cấp " +
-        pc.level
-    );
+        /*
+        ========================================
+        HIỆN / ẨN MẬT KHẨU
+        ========================================
+        */
 
-    updateStats();
+        showPassword.addEventListener(
+            "click",
+            () => {
 
-    renderComputers();
+                if (password.type === "password") {
 
-}
+                    password.type = "text";
 
-function addLog(message) {
+                    showPassword.textContent = "🙈";
 
-    const log =
-        document.getElementById("log");
+                } else {
 
-    const p =
-        document.createElement("p");
+                    password.type = "password";
 
-    const time =
-        new Date().toLocaleTimeString();
+                    showPassword.textContent = "👁";
 
-    p.textContent =
-        "[" + time + "] " + message;
+                }
 
-    log.prepend(p);
+            }
+        );
 
-}
 
-updateStats();
+        /*
+        ========================================
+        FORM
+        ========================================
+        */
 
-renderComputers();
+        form.addEventListener(
+            "submit",
+            (event) => {
 
-addLog(
-    "🎮 Chào mừng bạn đến với Net Cafe Simulator!"
-);
+                event.preventDefault();
 
-setInterval(gameTick, 1000);
 
-</script>
+                if (registerMode) {
+
+                    if (
+                        password.value !==
+                        confirmPassword.value
+                    ) {
+
+                        alert(
+                            "Mật khẩu nhập lại không giống nhau!"
+                        );
+
+                        return;
+
+                    }
+
+
+                    alert(
+                        "UI đăng ký hoạt động!\n\n" +
+                        "Bước tiếp theo sẽ kết nối MySQL."
+                    );
+
+                } else {
+
+                    alert(
+                        "UI đăng nhập hoạt động!\n\n" +
+                        "Bước tiếp theo sẽ kết nối server."
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
 
 </body>
 </html>
