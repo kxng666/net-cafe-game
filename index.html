@@ -2,319 +2,1002 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
-    <title>Thành Phố Sợi Chỉ</title>
+    <meta
+        name="theme-color"
+        content="#090b18"
+    >
 
-    <link rel="stylesheet" href="style.css">
-</head>
+    <title>THÀNH PHỐ SỢI CHỈ</title>
 
-<body>
+    <style>
 
-    <main class="game-container">
+        /* =====================================
+           RESET
+        ===================================== */
 
-        <!-- LOGIN CARD -->
-        <section class="login-card">
+        * {
+            box-sizing: border-box;
+        }
 
-            <!-- LOGO -->
-            <div class="logo-area">
-                <img
-                    src="logo.png"
-                    alt="Thành Phố Sợi Chỉ"
-                    class="game-logo"
-                >
-            </div>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
 
-            <div class="subtitle">
-                ✦ ONLINE WORLD ✦
-            </div>
+        body {
+            min-height: 100vh;
 
-            <!-- TAB -->
-            <div class="tabs">
+            font-family:
+                "Courier New",
+                Courier,
+                monospace;
 
-                <button
-                    type="button"
-                    id="loginTab"
-                    class="tab active"
-                >
-                    ĐĂNG NHẬP
-                </button>
+            color: #ffffff;
 
-                <button
-                    type="button"
-                    id="registerTab"
-                    class="tab"
-                >
-                    ĐĂNG KÝ
-                </button>
+            background:
+                #080b18;
 
-            </div>
-
-            <!-- FORM -->
-            <form id="accountForm">
-
-                <!-- USERNAME -->
-                <label for="username">
-                    TÊN TÀI KHOẢN
-                </label>
-
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Nhập tên tài khoản..."
-                    maxlength="20"
-                    autocomplete="username"
-                    required
-                >
-
-                <!-- PASSWORD -->
-                <label for="password">
-                    MẬT KHẨU
-                </label>
-
-                <div class="password-box">
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Nhập mật khẩu..."
-                        minlength="6"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        id="showPassword"
-                        class="password-button"
-                    >
-                        👁
-                    </button>
-
-                </div>
-
-                <!-- CONFIRM PASSWORD -->
-                <div
-                    id="confirmPasswordBox"
-                    class="hidden"
-                >
-
-                    <label for="confirmPassword">
-                        NHẬP LẠI MẬT KHẨU
-                    </label>
-
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        placeholder="Nhập lại mật khẩu..."
-                        minlength="6"
-                        autocomplete="new-password"
-                    >
-
-                </div>
-
-                <!-- REMEMBER -->
-                <label class="remember">
-
-                    <input
-                        type="checkbox"
-                        id="remember"
-                    >
-
-                    <span>
-                        Ghi nhớ tài khoản trên thiết bị này
-                    </span>
-
-                </label>
-
-                <!-- SUBMIT -->
-                <button
-                    type="submit"
-                    id="submitButton"
-                    class="main-button"
-                >
-                    ▶ ĐĂNG NHẬP VÀO THÀNH PHỐ
-                </button>
-
-            </form>
-
-            <div class="footer">
-                THÀNH PHỐ SỢI CHỈ © 2026
-                <br>
-                PIXEL ONLINE ROLEPLAY
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <script>
-
-        const loginTab =
-            document.getElementById("loginTab");
-
-        const registerTab =
-            document.getElementById("registerTab");
-
-        const confirmBox =
-            document.getElementById("confirmPasswordBox");
-
-        const confirmPassword =
-            document.getElementById("confirmPassword");
-
-        const submitButton =
-            document.getElementById("submitButton");
-
-        const password =
-            document.getElementById("password");
-
-        const showPassword =
-            document.getElementById("showPassword");
-
-        const form =
-            document.getElementById("accountForm");
-
-
-        let registerMode = false;
-
-
-        /*
-        ========================================
-        CHUYỂN ĐĂNG NHẬP / ĐĂNG KÝ
-        ========================================
-        */
-
-        function changeMode(register) {
-
-            registerMode = register;
-
-            loginTab.classList.toggle(
-                "active",
-                !register
-            );
-
-            registerTab.classList.toggle(
-                "active",
-                register
-            );
-
-
-            if (register) {
-
-                confirmBox.classList.remove("hidden");
-
-                confirmPassword.required = true;
-
-                submitButton.textContent =
-                    "▶ TẠO TÀI KHOẢN";
-
-            } else {
-
-                confirmBox.classList.add("hidden");
-
-                confirmPassword.required = false;
-
-                submitButton.textContent =
-                    "▶ ĐĂNG NHẬP VÀO THÀNH PHỐ";
-
-            }
-
+            overflow-x: hidden;
         }
 
 
-        loginTab.addEventListener(
-            "click",
-            () => changeMode(false)
-        );
+        /* =====================================
+           PIXEL BACKGROUND
+        ===================================== */
+
+        .game-page {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 25px 16px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #101633 0%,
+                    #171a3c 48%,
+                    #090b18 100%
+                );
+        }
 
 
-        registerTab.addEventListener(
-            "click",
-            () => changeMode(true)
-        );
+        /* Pixel stars */
 
+        .stars {
 
-        /*
-        ========================================
-        HIỆN / ẨN MẬT KHẨU
-        ========================================
-        */
+            position: absolute;
 
-        showPassword.addEventListener(
-            "click",
-            () => {
+            inset: 0;
 
-                if (password.type === "password") {
+            pointer-events: none;
 
-                    password.type = "text";
+            opacity: 0.7;
+        }
 
-                    showPassword.textContent = "🙈";
+        .star {
+            position: absolute;
 
-                } else {
+            color: #ffffff;
 
-                    password.type = "password";
+            font-size: 12px;
 
-                    showPassword.textContent = "👁";
+            opacity: 0.7;
 
-                }
+            animation:
+                twinkle 2.5s infinite;
+        }
 
+        .star:nth-child(1) {
+            left: 8%;
+            top: 12%;
+        }
+
+        .star:nth-child(2) {
+            left: 23%;
+            top: 22%;
+            animation-delay: .5s;
+        }
+
+        .star:nth-child(3) {
+            right: 15%;
+            top: 15%;
+            animation-delay: 1s;
+        }
+
+        .star:nth-child(4) {
+            right: 30%;
+            top: 28%;
+            animation-delay: 1.5s;
+        }
+
+        .star:nth-child(5) {
+            left: 15%;
+            bottom: 20%;
+            animation-delay: .8s;
+        }
+
+        .star:nth-child(6) {
+            right: 10%;
+            bottom: 25%;
+            animation-delay: 1.3s;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .25;
             }
-        );
+
+            50% {
+                opacity: 1;
+            }
+        }
 
 
-        /*
-        ========================================
-        FORM
-        ========================================
-        */
+        /* =====================================
+           CITY PIXEL SILHOUETTE
+        ===================================== */
 
-        form.addEventListener(
-            "submit",
-            (event) => {
+        .city {
 
-                event.preventDefault();
+            position: absolute;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            height: 155px;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            opacity: .45;
+
+            pointer-events: none;
+        }
+
+        .building {
+
+            width: 30px;
+
+            background: #12162f;
+
+            border-top: 3px solid #282e59;
+
+            position: relative;
+        }
+
+        .building::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 6px;
+
+            right: 6px;
+
+            top: 10px;
+
+            height: 5px;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #e7a92d 0 4px,
+                    transparent 4px 9px
+                );
+
+            box-shadow:
+                0 14px 0 #e7a92d,
+                0 28px 0 #e7a92d,
+                0 42px 0 #e7a92d;
+        }
+
+        .building:nth-child(1) {
+            height: 55px;
+        }
+
+        .building:nth-child(2) {
+            height: 85px;
+        }
+
+        .building:nth-child(3) {
+            height: 62px;
+        }
+
+        .building:nth-child(4) {
+            height: 125px;
+        }
+
+        .building:nth-child(5) {
+            height: 75px;
+        }
+
+        .building:nth-child(6) {
+            height: 105px;
+        }
+
+        .building:nth-child(7) {
+            height: 65px;
+        }
+
+        .building:nth-child(8) {
+            height: 92px;
+        }
+
+        .building:nth-child(9) {
+            height: 52px;
+        }
 
 
-                if (registerMode) {
+        /* =====================================
+           MAIN CARD
+        ===================================== */
 
-                    if (
-                        password.value !==
-                        confirmPassword.value
-                    ) {
+        .login-card {
 
-                        alert(
-                            "Mật khẩu nhập lại không giống nhau!"
-                        );
+            position: relative;
 
-                        return;
+            z-index: 10;
 
-                    }
+            width: min(
+                440px,
+                100%
+            );
+
+            background:
+                #171a35;
+
+            border:
+                4px solid #080a16;
+
+            box-shadow:
+                8px 8px 0 #050611,
+                0 0 0 4px #424875;
+
+            padding:
+                18px 20px 22px;
+        }
 
 
-                    alert(
-                        "UI đăng ký hoạt động!\n\n" +
-                        "Bước tiếp theo sẽ kết nối MySQL."
+        /* =====================================
+           LOGO
+        ===================================== */
+
+        .logo-container {
+
+            width: 100%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .game-logo {
+
+            display: block;
+
+            width: min(
+                330px,
+                88%
+            );
+
+            height: auto;
+
+            max-height: 190px;
+
+            object-fit: contain;
+
+            image-rendering: auto;
+        }
+
+
+        /* =====================================
+           SUBTITLE
+        ===================================== */
+
+        .subtitle {
+
+            text-align: center;
+
+            margin-top: 3px;
+
+            margin-bottom: 18px;
+
+            color: #f4b83f;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            letter-spacing: 3px;
+        }
+
+
+        /* =====================================
+           LOGIN / REGISTER TABS
+        ===================================== */
+
+        .tabs {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 7px;
+
+            margin-bottom: 18px;
+        }
+
+        .tab {
+
+            min-height: 46px;
+
+            border:
+                3px solid #080a16;
+
+            background:
+                #292d4e;
+
+            color:
+                #aeb4d5;
+
+            font-family:
+                inherit;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            box-shadow:
+                3px 3px 0 #070914;
+
+            transition:
+                transform .08s,
+                background .15s;
+        }
+
+        .tab:hover {
+
+            background:
+                #373c65;
+        }
+
+        .tab:active {
+
+            transform:
+                translate(
+                    2px,
+                    2px
+                );
+        }
+
+        .tab.active {
+
+            background:
+                #e69d20;
+
+            color:
+                #171426;
+
+            border-color:
+                #ffd36b;
+        }
+
+
+        /* =====================================
+           LABEL
+        ===================================== */
+
+        .field-label {
+
+            display: block;
+
+            margin:
+                13px 0 7px;
+
+            color:
+                #d5d9f0;
+
+            font-size:
+                12px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                1px;
+        }
+
+
+        /* =====================================
+           INPUT
+        ===================================== */
+
+        .input {
+
+            width: 100%;
+
+            min-height: 50px;
+
+            padding:
+                10px 12px;
+
+            border:
+                3px solid #565d8c;
+
+            outline: none;
+
+            background:
+                #0c1024;
+
+            color:
+                #ffffff;
+
+            font-family:
+                inherit;
+
+            font-size:
+                15px;
+
+            border-radius: 0;
+        }
+
+        .input::placeholder {
+
+            color:
+                #656b8f;
+        }
+
+        .input:focus {
+
+            border-color:
+                #f0a928;
+
+            box-shadow:
+                3px 3px 0 #080a15;
+        }
+
+
+        /* =====================================
+           PASSWORD
+        ===================================== */
+
+        .password-wrapper {
+
+            position: relative;
+
+            width: 100%;
+        }
+
+        .password-wrapper .input {
+
+            padding-right:
+                55px;
+        }
+
+        .show-password {
+
+            position: absolute;
+
+            top: 5px;
+
+            right: 5px;
+
+            width: 42px;
+
+            height: 40px;
+
+            border: 0;
+
+            background:
+                #292d4e;
+
+            color:
+                #f4c75b;
+
+            font-size:
+                17px;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================
+           CONFIRM PASSWORD
+        ===================================== */
+
+        .register-only {
+
+            display: none;
+        }
+
+        .register-mode .register-only {
+
+            display: block;
+        }
+
+
+        /* =====================================
+           REMEMBER
+        ===================================== */
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin-top: 13px;
+
+            color:
+                #9da2c5;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.4;
+
+            cursor: pointer;
+        }
+
+        .remember input {
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            margin:
+                0;
+
+            accent-color:
+                #e69d20;
+
+            flex-shrink:
+                0;
+        }
+
+
+        /* =====================================
+           MAIN BUTTON
+        ===================================== */
+
+        .main-button {
+
+            width: 100%;
+
+            min-height: 55px;
+
+            margin-top: 18px;
+
+            border:
+                3px solid #ffe08a;
+
+            background:
+                #e69d20;
+
+            color:
+                #171426;
+
+            font-family:
+                inherit;
+
+            font-size:
+                14px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .5px;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                5px 5px 0 #080a15;
+
+            transition:
+                transform .08s,
+                background .12s;
+        }
+
+        .main-button:hover {
+
+            background:
+                #f2ad31;
+        }
+
+        .main-button:active {
+
+            transform:
+                translate(
+                    3px,
+                    3px
+                );
+
+            box-shadow:
+                2px 2px 0 #080a15;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+
+            text-align:
+                center;
+
+            margin-top:
+                19px;
+
+            color:
+                #777da4;
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+        }
+
+
+        /* =====================================
+           ERROR MESSAGE
+        ===================================== */
+
+        .message {
+
+            display:
+                none;
+
+            margin-top:
+                12px;
+
+            padding:
+                10px;
+
+            border:
+                2px solid #7b3e4b;
+
+            background:
+                #2b1723;
+
+            color:
+                #ffb8c4;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.5;
+
+            text-align:
+                center;
+        }
+
+
+        /* =====================================
+           TABLET
+        ===================================== */
+
+        @media (
+            min-width: 600px
+        ) {
+
+            .game-page {
+
+                padding:
+                    35px 20px;
+            }
+
+            .login-card {
+
+                width:
+                    440px;
+            }
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (
+            max-width: 480px
+        ) {
+
+            .game-page {
+
+                min-height:
+                    100svh;
+
+                padding:
+                    18px 10px;
+            }
+
+            .login-card {
+
+                width:
+                    100%;
+
+                border-width:
+                    3px;
+
+                padding:
+                    13px 14px 18px;
+
+                box-shadow:
+                    6px 6px 0 #050611,
+                    0 0 0 3px #424875;
+            }
+
+            .game-logo {
+
+                width:
+                    min(
+                        300px,
+                        92%
                     );
 
-                } else {
-
-                    alert(
-                        "UI đăng nhập hoạt động!\n\n" +
-                        "Bước tiếp theo sẽ kết nối server."
-                    );
-
-                }
-
+                max-height:
+                    170px;
             }
-        );
 
-    </script>
+            .subtitle {
 
-</body>
-</html>
+                font-size:
+                    9px;
+
+                margin-bottom:
+                    14px;
+            }
+
+            .tabs {
+
+                gap:
+                    5px;
+            }
+
+            .tab {
+
+                min-height:
+                    48px;
+
+                font-size:
+                    12px;
+            }
+
+            .field-label {
+
+                font-size:
+                    11px;
+            }
+
+            .input {
+
+                min-height:
+                    52px;
+
+                font-size:
+                    16px;
+            }
+
+            .main-button {
+
+                min-height:
+                    57px;
+
+                font-size:
+                    12px;
+            }
+
+            .city {
+
+                height:
+                    90px;
+            }
+
+            .building {
+
+                transform:
+                    scale(.75);
+
+                transform-origin:
+                    bottom;
+            }
+        }
+
+
+        /* =====================================
+           VERY SMALL PHONES
+        ===================================== */
+
+        @media (
+            max-width: 350px
+        ) {
+
+            .game-page {
+
+                padding:
+                    10px 7px;
+            }
+
+            .login-card {
+
+                padding:
+                    10px 11px 15px;
+            }
+
+            .game-logo {
+
+                width:
+                    250px;
+            }
+
+            .tab {
+
+                font-size:
+                    11px;
+            }
+
+            .footer {
+
+                font-size:
+                    9px;
+            }
+        }
+
+
+        /* =====================================
+           REDUCED MOTION
+        ===================================== */
+
+        @media (
+            prefers-reduced-motion: reduce
+        ) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation:
+                    none !important;
+
+                transition:
+                    none !important;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="game-page">
+
+
+    <!-- =====================================
+         STARS
+    ====================================== -->
+
+    <div class="stars">
+
+        <span class="star">✦</span>
+        <span class="star">✦</span>
+        <span class="star">✦</span>
+        <span class="star">✦</span>
+        <span class="star">✦</span>
+        <span class="star">✦</span>
+
+    </div>
+
+
+    <!-- =====================================
+         PIXEL CITY
+    ====================================== -->
+
+    <div class="city">
+
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+        <div class="building"></div>
+
+    </div>
+
+
+    <!-- =====================================
+         LOGIN CARD
+    ====================================== -->
+
+    <section
+        class="login-card"
+        id="loginCard"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="logo-container">
+
+            <img
+                src="logo.png"
+                alt="THÀNH PHỐ SỢI CHỈ"
+                class="game-logo"
+                onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';"
+            >
+
+            <!-- Hiển thị nếu chưa có logo.png -->
+
+            <div
+                id="logoFallback"
+                style="
+                    display:none;
+                    text-align:center;
+                    font-weight:900;
+                    line-height:1;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:28px;
+                        color:#ffffff;
+                        text-shadow:4px 4px 0 #3657a8;
+                    "
+                >
+                    THÀNH PHỐ
+                </div>
+
+                <div
+                    style="
+                        margin-top:4px;
+                        font-size:34px;
+                        color:#f0a928
